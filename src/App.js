@@ -5,7 +5,8 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      grid: [[0,0,0,0], [0,0,0,0], [0,0,0,0], [0,0,0,0]],
+      gridSize: 5,
+      grid: [[0,0,0,0,0], [0,0,0,0,0], [0,0,0,0,0], [0,0,0,0,0], [0,0,0,0,0]],
       color: 'blue',
       count: 0
     }
@@ -24,53 +25,53 @@ class App extends Component {
           })
     //change color of the square from state
    let newGridState = this.state.grid
+   let lastIndex = this.state.gridSize - 1
      if(row === 0 && column === 0) { // if clicked on left top corner
        let right = newGridState[row][column+1]
        let bottom = newGridState[row+1][column]
        if (newGridState[row][column] === right || newGridState[row][column] === bottom) {
-         // console.log("Its a match!")
          this.setState( previousCount => {return {count: previousCount.count + 1}})
        }
-     } else if (row === 0 && column === 3) { //if clicked on right top corner
+     } else if (row === 0 && column === lastIndex) { //if clicked on right top corner
       let left = newGridState[row][column-1]
       let bottom = newGridState[row+1][column]
       if (newGridState[row][column] === left || newGridState[row][column] === bottom) {
         this.setState( previousCount => {return {count: previousCount.count + 1}})
       }
-    } else if (row === 3 && column === 0) {   //if clicked on bottom left corner
+    } else if (row === lastIndex && column === 0) {   //if clicked on bottom left corner
       let right = newGridState[row][column+1]
       let top = newGridState[row-1][column]
       if (newGridState[row][column] === top || newGridState[row][column] === right) {
         this.setState( previousCount => {return {count: previousCount.count + 1}})
       }
-    } else if (row === 3 && column === 3) {//if clicked on bottom right corner
+    } else if (row === lastIndex && column === lastIndex) {//if clicked on bottom right corner
       let left = newGridState[row][column-1]
       let top = newGridState[row-1][column]
       if (newGridState[row][column] === left || newGridState[row][column] === top) {
         this.setState( previousCount => {return {count: previousCount.count + 1}})
       }
-    } else if ((column !== 0 && row === 0) || (column !== 3 && row === 0)) {  // if clicked on top row
+    } else if ((column !== 0 && row === 0) || (column !== lastIndex && row === 0)) {  // if clicked on top row
       let left = newGridState[row][column-1];
       let right = newGridState[row][column+1];
       let bottom = newGridState[row+1][column];
       if (newGridState[row][column] === left || newGridState[row][column] === right || newGridState[row][column] === bottom) {
         this.setState( previousCount => {return {count: previousCount.count + 1}})
       }
-    } else if ((column !== 0 && row === 3) || (column !== 3 && row === 3)) {//if clicked on bottom row
+    } else if ((column !== 0 && row === lastIndex) || (column !== lastIndex && row === lastIndex)) {//if clicked on bottom row
       let left = newGridState[row][column-1];
       let right = newGridState[row][column+1];
       let top = newGridState[row-1][column];
       if (newGridState[row][column] === left || newGridState[row][column] === right || newGridState[row][column] === top) {
         this.setState( previousCount => {return {count: previousCount.count + 1}})
       }
-    } else if ((row !== 0 && column === 0) || (row !== 3 && column === 0)) { //if clicked on left column
+    } else if ((row !== 0 && column === 0) || (row !== lastIndex && column === 0)) { //if clicked on left column
       let right = newGridState[row][column+1];
       let top = newGridState[row-1][column];
       let bottom = newGridState[row+1][column];
       if (newGridState[row][column] === top || newGridState[row][column] === right || newGridState[row][column] === bottom) {
         this.setState( previousCount => {return {count: previousCount.count + 1}})
       }
-    } else if ((row !== 0 && column === 3) || (row !== 3 && column === 3)) { //if clicked on right column
+    } else if ((row !== 0 && column === lastIndex) || (row !== lastIndex && column === lastIndex)) { //if clicked on right column
       let left = newGridState[row][column+1];
       let top = newGridState[row-1][column];
       let bottom = newGridState[row+1][column];
@@ -97,8 +98,12 @@ class App extends Component {
   render() {
     return (
       <div className='container'>
-        <h2>Next color:{this.state.color}</h2>
-        <h3>Matches count: {this.state.count}</h3>
+        <div className='row justify-content-md-center'>
+          <h1>Next color: <span style={ {color: this.state.color} }>{this.state.color}</span></h1>
+        </div>
+        <div className='row justify-content-md-center'>
+          <h2>Matches count: {this.state.count}</h2>
+        </div>
             {
               this.state.grid.map((oneRow, rowIndex) => {
                 return( <div className='row justify-content-md-center'>
