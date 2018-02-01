@@ -14,7 +14,6 @@ class App extends Component {
 
   squareClicked(row, column) {
     console.log(this.state.grid)
-    console.log(`clicked on row ${row} column ${column}`)
     if (this.state.grid[row][column] === 0) {
       let currentState = this.state.grid
       let cloneOfState = currentState.slice(0);
@@ -24,86 +23,66 @@ class App extends Component {
           })
       //change color of the square from state
 
-   //check the array for matches with idx's below:
-   //arr[row][column + 1] arr[row][column - 1] arr[row+1][column] arr[row-1][column]
-   //if any matches, clear both squares of color
-   //if no matches, change the 0 at arr[row][column] equal to color key
    let newGridState = this.state.grid
-   // let left = newGridState[row][column+1];
-   // let right = newGridState[row][column-1];
-   // let bottom = newGridState[row+1][column];
-   // let top = newGridState[row-1][column]
-    // if clicked on left top corner
-     if(row === 0 && column === 0) {
+     if(row === 0 && column === 0) { // if clicked on left top corner
        let right = newGridState[row][column+1]
        let bottom = newGridState[row+1][column]
        if (newGridState[row][column] === right || newGridState[row][column] === bottom) {
-         let stateOfGrid = this.state.grid
-         let cloneOfTheState = stateOfGrid.slice(0);
-         cloneOfState[row][column] = 0;
-         this.setState({
-               grid: cloneOfTheState,
-             })
+         console.log("Its a match!")
        }
-     }
-    //if clicked on right top corner
-    if(row === 0 && column === 3) {
+     } else if (row === 0 && column === 3) { //if clicked on right top corner
       let left = newGridState[row][column-1]
       let bottom = newGridState[row+1][column]
       if (newGridState[row][column] === left || newGridState[row][column] === bottom) {
         console.log("Its a match!")
       }
-    }
-    //if clicked on bottom left corner
-    if(row === 3 && column === 0) {
+    } else if (row === 3 && column === 0) {   //if clicked on bottom left corner
       let right = newGridState[row][column+1]
       let top = newGridState[row-1][column]
       if (newGridState[row][column] === top || newGridState[row][column] === right) {
         console.log("Its a match!")
       }
-    }
-    //if clicked on bottom right corner
-    if(row === 3 && column === 3) {
+    } else if (row === 3 && column === 3) {//if clicked on bottom right corner
       let left = newGridState[row][column-1]
       let top = newGridState[row+1][column]
       if (newGridState[row][column] === left || newGridState[row][column] === top) {
         console.log("Its a match!")
       }
-    }
-    // if clicked on top row
-    if(row === 0) {
-      let left = newGridState[row][column+1];
-      let right = newGridState[row][column-1];
+    } else if ((column !== 0 && row === 0) || (column !== 3 && row === 0)) {  // if clicked on top row
+      let left = newGridState[row][column-1];
+      let right = newGridState[row][column+1];
       let bottom = newGridState[row+1][column];
       if (newGridState[row][column] === left || newGridState[row][column] === right || newGridState[row][column] === bottom) {
       console.log("its a match!");
       }
-    }
-  //if clicked on bottom row
-    if(row === 3) {
-      let left = newGridState[row][column+1];
-      let right = newGridState[row][column-1];
+    } else if ((column !== 0 && row === 3) || (column !== 3 && row === 3)) {//if clicked on bottom row
+      let left = newGridState[row][column-1];
+      let right = newGridState[row][column+1];
       let top = newGridState[row-1][column];
       if (newGridState[row][column] === left || newGridState[row][column] === right || newGridState[row][column] === top) {
       console.log("its a match!");
       }
-    }
-    //if clicked on left column
-    if(row !== 0 && column === 0) {
-      let right = newGridState[row][column-1];
+    } else if ((row !== 0 && column === 0) || (row !== 3 && column === 0)) { //if clicked on left column
+      let right = newGridState[row][column+1];
       let top = newGridState[row-1][column];
       let bottom = newGridState[row+1][column];
       if (newGridState[row][column] === top || newGridState[row][column] === right || newGridState[row][column] === bottom) {
       console.log("its a match!");
       }
-    }
-    //if clicked on right column
-    if(row !== 0 && column === 3) {
+    } else if ((row !== 0 && column === 3) || (row !== 3 && column === 3)) { //if clicked on right column
       let left = newGridState[row][column+1];
       let top = newGridState[row-1][column];
       let bottom = newGridState[row+1][column];
       if (newGridState[row][column] === left || newGridState[row][column] === top || newGridState[row][column] === bottom) {
       console.log("its a match!");
+      }
+    } else {
+      let left = newGridState[row][column-1];
+      let right = newGridState[row][column+1];
+      let top = newGridState[row-1][column];
+      let bottom = newGridState[row+1][column];
+      if (newGridState[row][column] === left || newGridState[row][column] === top || newGridState[row][column] === bottom || newGridState[row][column] === right) {
+        console.log("Its a match!")
       }
     }
  }
