@@ -21,8 +21,7 @@ class App extends Component {
       this.setState({
             grid: cloneOfState,
           })
-      //change color of the square from state
-
+    //change color of the square from state
    let newGridState = this.state.grid
      if(row === 0 && column === 0) { // if clicked on left top corner
        let right = newGridState[row][column+1]
@@ -44,7 +43,7 @@ class App extends Component {
       }
     } else if (row === 3 && column === 3) {//if clicked on bottom right corner
       let left = newGridState[row][column-1]
-      let top = newGridState[row+1][column]
+      let top = newGridState[row-1][column]
       if (newGridState[row][column] === left || newGridState[row][column] === top) {
         console.log("Its a match!")
       }
